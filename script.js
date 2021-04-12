@@ -76,38 +76,38 @@ var initBubbles = function(){
   }
 }
 
-var animateBubble = function( x, y ){
+// var animateBubble = function( x, y ){
 
-  function animate(el, x, y){
-    el.dataset.active = 'true';
-    TweenMax.set(el, {
-      x: x,
-      y: y
-    })
-    TweenMax.fromTo(el, 0.4, {
-      opacity: 1,
-      scaleX: 0,
-      scaleY: 0
-    }, {
-      opacity: 0,
-      scaleX: 1,
-      scaleY: 1,
-      ease: Power3.easeOut,
-      onComplete: function(){
-        el.style = '';
-        el.dataset.active = 'false';
-      }
-    })
-  };
+//   function animate(el, x, y){
+//     el.dataset.active = 'true';
+//     TweenMax.set(el, {
+//       x: x,
+//       y: y
+//     })
+//     TweenMax.fromTo(el, 0.4, {
+//       opacity: 1,
+//       scaleX: 0,
+//       scaleY: 0
+//     }, {
+//       opacity: 0,
+//       scaleX: 1,
+//       scaleY: 1,
+//       ease: Power3.easeOut,
+//       onComplete: function(){
+//         el.style = '';
+//         el.dataset.active = 'false';
+//       }
+//     })
+//   };
 
-  for(var i = 0; i < bubbles.length; i++) {
-    if( bubbles[i].dataset.active == 'false'){
-      animate(bubbles[i], x, y);
-      break;
-    }
-  }
+//   for(var i = 0; i < bubbles.length; i++) {
+//     if( bubbles[i].dataset.active == 'false'){
+//       animate(bubbles[i], x, y);
+//       break;
+//     }
+//   }
 
-}
+// }
 
 Matter.Events.on(engine, 'collisionStart', function(event) {
 
@@ -135,11 +135,11 @@ var updatePosition = function(){
     });
   }
 
-  TweenLite.set( bouncer, {
-    x: bouncerClone.position.x - bouncer.clientWidth*0.5 + 'px',
-    y: bouncerClone.position.y - bouncer.clientHeight*0.5 + 'px',
-    rotation: bouncerClone.angle + 'rad'
-  });
+  // TweenLite.set( bouncer, {
+  //   x: bouncerClone.position.x - bouncer.clientWidth*0.5 + 'px',
+  //   y: bouncerClone.position.y - bouncer.clientHeight*0.5 + 'px',
+  //   rotation: bouncerClone.angle + 'rad'
+  // });
 }
 
 
@@ -191,8 +191,8 @@ var initEscapedBodiesRetrieval = function(allBodies, startCoordinates) {
             if (hasBodyEscaped(body)) {
 
               Matter.Body.setVelocity(body, {
-                x: -body.velocity.x,
-                y: -body.velocity.y
+                x: 0,
+                y: 0
               });
 
               Matter.Body.translate(body, {
@@ -261,8 +261,8 @@ var initLetterClones = function(){
           letters[i].clientHeight, {
             isSleeping: false,
             density: 1,
-            restitution: 0.7,
-            frictionAir: 0.001,
+            restitution: 0.5,
+            frictionAir: 0,
             collisionFilter: {
               category: categories.catBody
             },
@@ -271,7 +271,8 @@ var initLetterClones = function(){
             }
           })
         );
-    
+    Body.scale(blocks[i],1,-2.5);
+    Body.setCentre(blocks[i],{x:blocks[i].position.x + 18,y:blocks[i].position.y + letters[i].clientHeight/2 +18},false)
 
     World.add(engine.world, blocks[i]);
 
@@ -286,10 +287,10 @@ var initLetterClones = function(){
 var initBorders = function(){
   var borderOptions = { isStatic: true, render: { opacity: 0 }};
   var offset = 5;
-  borders.push(Bodies.rectangle( w*0.5, offset, w, 2, borderOptions )); // top
+  borders.push(Bodies.rectangle( w*0.5, offset, w, 10, borderOptions )); // top
   borders.push(Bodies.rectangle( w - offset, h*0.5, 2, h, borderOptions ));
-  borders.push(Bodies.rectangle( w*0.5, h - offset, w, 2, borderOptions )); // bottom
-  borders.push(Bodies.rectangle( 0 + offset, h*0.5, 2, h, borderOptions ));
+  borders.push(Bodies.rectangle( w*0.5, h - 10 , w, 8, borderOptions )); // bottom
+  borders.push(Bodies.rectangle( offset, h*0.5, 2, h, borderOptions ));
 
   for(var i = 0; i < borders.length; i++){
       World.add(engine.world, borders[i]);
