@@ -56,7 +56,7 @@ var renderer = Render.create({
   engine: engine,
   options: {
     bounds: true,
-    showBounds: false,
+    showBounds: true,
     background: "transparent",
     width: w,
     height: h,
@@ -67,7 +67,7 @@ var renderer = Render.create({
 var initBubbles = function(){
   if(!letters || letters.length == 0) return;
   var bubbleContainer = document.querySelector('[data-el="bubbles"]');
-  for(var i = 0; i < letters.length*2; i++) {
+  for(var i = 0; i < letters.length; i++) {
     var bubble = document.createElement('div');
     bubble.classList.add('bubble');
     bubble.dataset.active = 'false';
@@ -165,7 +165,7 @@ var updateCanvas = function(){
 var initMouse = function (array){
   var mouse = Matter.Mouse.create(canvas);
   var mouseConstraint = MouseConstraint.create(engine, { mouse: mouse });
-  mouseConstraint.constraint.stiffness = 2;
+  mouseConstraint.constraint.stiffness = 1.5;
   World.add(engine.world, mouseConstraint);
   Matter.Events.on(mouseConstraint, 'startdrag', removeInfo);
 
@@ -260,7 +260,7 @@ var initLetterClones = function(){
           letters[i].clientWidth,
           letters[i].clientHeight, {
             isSleeping: false,
-            density: 0.6,
+            density: 1,
             restitution: 0.7,
             frictionAir: 0.001,
             collisionFilter: {
@@ -271,6 +271,7 @@ var initLetterClones = function(){
             }
           })
         );
+    
 
     World.add(engine.world, blocks[i]);
 
@@ -352,6 +353,8 @@ function randArb(min, max) {
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+console.log(letters[1]);
 
 // ______________________________ F I R E
 init();
