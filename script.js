@@ -259,6 +259,7 @@ var fixLetters = function(){
 };
 
 var initLetterClones = function(){
+    
   for(var i = 0; i < letters.length; i++) {
     blocks.push(
       Bodies.rectangle(
