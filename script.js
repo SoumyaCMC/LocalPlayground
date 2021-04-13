@@ -322,6 +322,7 @@ var init = function(){
   Render.run(renderer);
 }
 
+var virus
 
 // ======================= H E L P E R S  /  U T I L S
 

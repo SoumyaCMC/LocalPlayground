@@ -1,59 +1,46 @@
-document.addEventListener('DOMContentLoaded', () => {
-    let controller = new ScrollMagic.Controller();
+gsap.registerPlugin(ScrollTrigger)
+let sections = gsap.utils.toArray('section'),
+    currentSection = sections[0]
 
-    let timeline = new TimelineMax();
-    timeline
-    .to('#sixth', 6, {
-        y: -700
-    })
-    .to('#fifth', 6, {
-        y: -500
-    }, '-=6')
-    .to('#forth', 6, {
-        y: -400
-    }, '-=6')
-    .to('#third', 6, {
-        y: -300
-    }, '-=6')
-    .to('#second', 6, {
-        y: -200
-    }, '-=6')
-    .to('#first', 6, {
-        y: -100
-    }, '-=6')
-    .to('.content, .blur', 6, {
-        top: '0%'
-    }, '-=6')
-    .to('.title, nav, .footer-wrapper', 6, {
-        y: -600,
-    }, '-=6')
-    .from('.one', 3, {
-        top: '40px',
-        autoAlpha: 0
-    }, '-=4')
-    .from('.two', 3, {
-        top: '40px',
-        autoAlpha: 0
-    }, '-=3.5')
-    .from('.three', 3, {
-        top: '40px',
-        autoAlpha: 0
-    }, '-=3.5')
-    .from('.four', 3, {
-        top: '40px',
-        autoAlpha: 0
-    }, '-=3.5')
-    .from('.text', 3, {
-        y: 60,
-        autoAlpha: 0
-    }, '-=4')
+gsap.defaults({ overwrite: 'auto', duration: 0.2, ease: 'Power0.easeOut' })
 
-    let scene = new ScrollMagic.Scene({
-        triggerElement: 'section',
-        duration: '200%',
-        triggerHook: 0
+// stretch out the body height according to however many sections there are.
+gsap.set('body', { height: sections.length * 100 + '%' })
+
+// create a ScrollTrigger for each section
+sections.forEach((section, i) => {
+    ScrollTrigger.create({
+        // use dynamic scroll positions based on the window height (offset by half to make it feel natural)
+        start: () => (i - 0.5) * innerHeight,
+        end: () => (i + 0.5) * innerHeight,
+        // when a new section activates (from either direction), set the section accordinglyl.
+        onToggle: (self) => self.isActive && setSection(section),
     })
-    .setTween(timeline)
-    .setPin('section')
-    .addTo(controller);
 })
+
+function setSection(newSection) {
+    if (newSection !== currentSection) {
+        gsap.to(currentSection, { autoAlpha: 0 })
+        gsap.to(newSection, { scale: 1, autoAlpha: 1 })
+        currentSection = newSection
+    }
+}
+
+// handles the infinite part, wrapping around at either end....
+// ScrollTrigger.create({
+//     start: 1,
+//     end: () => ScrollTrigger.maxScroll(window) - 1,
+//     onLeaveBack: (self) => self.scroll(ScrollTrigger.maxScroll(window) - 2),
+//     onLeave: (self) => self.scroll(2),
+// }).scroll(2)
+
+gsap.to(".images", {
+    yPercent: 200,
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".pSection",
+      // start: "top bottom", // the default values
+      // end: "bottom top",
+      scrub: true
+    }, 
+  });
