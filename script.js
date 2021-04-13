@@ -45,7 +45,7 @@ var canvas = document.createElement('canvas'),
 var engine = Engine.create(  {  enableSleeping: false  });
     engine.world.wireframes = false;
     engine.world.gravity.x = 0;
-    engine.world.gravity.y = 0.25;
+    engine.world.gravity.y = 0.20;
 
 
 
@@ -179,11 +179,14 @@ var initMouse = function (array){
 var initEscapedBodiesRetrieval = function(allBodies, startCoordinates) {
 
     function hasBodyEscaped(body) {
-        var x = body.position.x;
-        var y = body.position.y;
+        var x = body.position.x ;
+        var y = body.position.y - 100;
+        
 
-        return x < 0 || x > w || y < 0 || y > h;
+        return x < 0 || x > w || y < 0 || y > h ;
     }
+
+    
 
     setInterval(function() {
         var i, body;
@@ -205,6 +208,8 @@ var initEscapedBodiesRetrieval = function(allBodies, startCoordinates) {
         }
     }, 300);
 }
+
+
 
 // ______________________________ create centered block
 var fixBouncer = function(){
@@ -263,18 +268,24 @@ var initLetterClones = function(){
           letters[i].clientHeight, {
             isSleeping: false,
             density: 1,
-            restitution: 0.5,
-            frictionAir: 0,
+            friction: 1,
+            restitution: 0.8,
+            frictionAir: 0.001,
             collisionFilter: {
-              category: categories.catMouse
+              category: categories.catMouse,
+              group : 1,
+
             },
             render: {
               opacity: 0
             }
           })
         );
-    Body.scale(blocks[i],1,2.5);
-    Body.setCentre(blocks[i],{x:blocks[i].position.x + 18,y:blocks[i].position.y + letters[i].clientHeight/2 +18},false);
+
+    var new_x = blocks[i].position.x + 18;
+    var new_y = (blocks[i].position.y + letters[i].clientHeight/2 + 22)
+    Body.scale(blocks[i],1,2.2);
+    Body.setCentre(blocks[i],{x:new_x,y:new_y},false);
 
     World.add(engine.world, blocks[i]);
 
@@ -287,7 +298,7 @@ var initLetterClones = function(){
 
 // walls/borders
 var initBorders = function(){
-  var borderOptions = { isStatic: true, render: { opacity: 0 }};
+  var borderOptions = { isStatic: true, render: { opacity: 1,  collisionFilter: {group:1,category : categories.catBody}}};
   var offset = 5;
   borders.push(Bodies.rectangle( w*0.5, offset, w, 10, borderOptions )); // top
   borders.push(Bodies.rectangle( w - offset, h*0.5, 2, h, borderOptions ));
@@ -308,6 +319,8 @@ var updateBorders = function() {
   initBorders();
 }
 
+var checker = Matter.Detector.canCollide(0,0);
+console.log(checker);
 
 
 var init = function(){
