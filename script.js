@@ -60,6 +60,7 @@ var renderer = Render.create({
     background: "transparent",
     width: w,
     height: h,
+    pixelRatio:'auto',
     wireframes: false
   }
 });
