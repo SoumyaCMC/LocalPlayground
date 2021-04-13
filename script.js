@@ -253,6 +253,7 @@ var fixLetters = function(){
 };
 
 var initLetterClones = function(){
+    
   for(var i = 0; i < letters.length; i++) {
     blocks.push(
       Bodies.rectangle(
@@ -274,7 +275,6 @@ var initLetterClones = function(){
         );
     Body.scale(blocks[i],1,2.5);
     Body.setCentre(blocks[i],{x:blocks[i].position.x + 18,y:blocks[i].position.y + letters[i].clientHeight/2 +18},false);
-
     World.add(engine.world, blocks[i]);
 
     letters[i].style.width = letters[i].clientWidth + 'px';
