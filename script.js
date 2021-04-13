@@ -256,8 +256,8 @@ var initLetterClones = function(){
   for(var i = 0; i < letters.length; i++) {
     blocks.push(
       Bodies.rectangle(
-          head.offsetLeft + letters[i].offsetLeft + letters[i].clientWidth*1.5,
-          head.offsetTop + letters[i].offsetTop + letters[i].clientHeight*1.5,
+          head.offsetLeft + letters[i].offsetLeft + letters[i].clientWidth*0.5,
+          head.offsetTop + letters[i].offsetTop + letters[i].clientHeight*0.5,
           letters[i].clientWidth,
           letters[i].clientHeight, {
             isSleeping: false,
