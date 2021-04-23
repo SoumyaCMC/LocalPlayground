@@ -22,7 +22,7 @@ html, body {
   color: #fce38a;
   text-decoration: none;
 }
-.links-container a.active {
+.links-container a.nav-active {
   color: red;
 }
 

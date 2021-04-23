@@ -22,8 +22,8 @@ window.onscroll = () => {
     let scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
     for (identCounter in sections) {
         if (sections[identCounter] <= scrollPosition) {
-            document.querySelector('.active').setAttribute('class', ' ');
-            document.querySelector('a[href*=' + identCounter + ']').setAttribute('class', 'active');
+            document.querySelector('.nav-active').setAttribute('class', ' ');
+            document.querySelector('a[href*=' + identCounter + ']').setAttribute('class', 'nav-active');
         }
     }
 };
