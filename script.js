@@ -18,8 +18,8 @@ var categories = {
 
 
 initDim = {
-  w: document.body.clientWidth,
-  h: document.body.clientHeight
+  w: stage.offsetWidth,
+  h: stage.offsetHeight
 };
 
 // ______________________________ Matter.js module aliases
@@ -37,15 +37,15 @@ var Engine = Matter.Engine,
 // ______________________________ canvas element to draw into
 var canvas = document.createElement('canvas'),
     context = canvas.getContext('2d');
-    canvas.width = 800;
-    canvas.height = 600;
+    canvas.width = stage.clientWidth;
+    canvas.height = stage.clientHeight;
 
 
 // ______________________________ Matter engine
 var engine = Engine.create(  {  enableSleeping: false  });
     engine.world.wireframes = false;
     engine.world.gravity.x = 0;
-    engine.world.gravity.y = 0.20;
+    engine.world.gravity.y = 0.15;
 
 
 
@@ -264,14 +264,14 @@ var initLetterClones = function(){
     blocks.push(
       Bodies.rectangle(
           head.offsetLeft + letters[i].offsetLeft + letters[i].clientWidth*0.5,
-          head.offsetTop + letters[i].offsetTop + letters[i].clientHeight*0.5,
+           letters[i].offsetTop + letters[i].clientHeight*0.8,
           letters[i].clientWidth,
           letters[i].clientHeight, {
             isSleeping: false,
             density: 1,
             friction: 1,
-            restitution: 0.8,
-            frictionAir: 0.001,
+            restitution: 0.98,
+            frictionAir: 0.01,
             collisionFilter: {
               category: categories.catMouse,
               group : 1,
@@ -284,7 +284,8 @@ var initLetterClones = function(){
         );
 
     var new_x = blocks[i].position.x + 18;
-    var new_y = (blocks[i].position.y + letters[i].clientHeight/2 + 22)
+    var new_y = (blocks[i].position.y + letters[i].offsetHeight/2 + 22)
+
     Body.scale(blocks[i],1,2.2);
     Body.setCentre(blocks[i],{x:new_x,y:new_y},false);
 
@@ -299,11 +300,11 @@ var initLetterClones = function(){
 
 // walls/borders
 var initBorders = function(){
-  var borderOptions = { isStatic: true, render: { opacity: 1,  collisionFilter: {group:1,category : categories.catBody}}};
+  var borderOptions = { isStatic: true, render: { opacity: 0,  collisionFilter: {group:1,category : categories.catBody}}};
   var offset = 5;
-  borders.push(Bodies.rectangle( w*0.5, offset, w, 10, borderOptions )); // top
+  // borders.push(Bodies.rectangle( w*0.5, offset, w, 10, borderOptions )); // top
   borders.push(Bodies.rectangle( w - offset, h*0.5, 2, h, borderOptions ));
-  borders.push(Bodies.rectangle( w*0.5, h - 10 , w, 8, borderOptions )); // bottom
+  borders.push(Bodies.rectangle( w*0.5, h - 10 , w, stage.clientHeight, borderOptions )); // bottom
   borders.push(Bodies.rectangle( offset, h*0.5, 2, h, borderOptions ));
 
   for(var i = 0; i < borders.length; i++){
@@ -329,7 +330,7 @@ var init = function(){
   initLetterClones();
     initMouse(blocks);
     initBouncer();
-    initEscapedBodiesRetrieval(blocks, { x: w*0.5, y: h*0.5 });
+    initEscapedBodiesRetrieval(blocks, { x: w*0.5, y: 70 });
     fixLetters();
   
   initBorders();
