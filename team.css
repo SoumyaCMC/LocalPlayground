@@ -43,3 +43,163 @@ html, body {
   color: #262626;
   background-color: #fce38a;
 }
+
+.page__container {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  width: 100vw;
+}
+
+.cards {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex: 0.5;
+  padding: 10px;
+}
+
+.card__data {
+  opacity: 0;
+}
+
+.card {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 80vh;
+  width: 140px;
+  border-right: 5px solid #fff;
+  transition: all 0.6s ease;
+  position: relative;
+  min-width: 40px;
+  position: relative;
+}
+
+.card:last-child {
+  border-right: none;
+}
+
+.c1 {
+  background-image: url("https://source.unsplash.com/weekly?cars");
+}
+.c2 {
+  background-image: url("https://source.unsplash.com/weekly?mountain");
+}
+.c3 {
+  background-image: url("https://source.unsplash.com/weekly?flower");
+}
+.c4 {
+  background-image: url("https://source.unsplash.com/weekly?sky");
+}
+.c5 {
+  background-image: url("https://source.unsplash.com/weekly?design");
+}
+.c6 {
+  background-image: url("https://source.unsplash.com/weekly?snow");
+}
+
+.card__head {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.card__head h3 {
+  color: #fff;
+  transform: rotate(-90deg);
+  font-size: 25px;
+  transition: all 0.3s ease;
+  opacity: 1;
+}
+
+.active {
+  width: 100vw;
+}
+
+.active .card__data {
+  opacity: 1;
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 10%;
+  transition: all 0.5s ease;
+}
+.active .card__head {
+  opacity: 0;
+}
+
+.active .card__data h2 {
+  padding: 10px 20px;
+  font-size: 35px;
+  color: orange;
+  transform: rotate(0deg);
+}
+
+.active .card__data h4 {
+  font-size: 20px;
+  color: #fff;
+}
+
+@media only screen and (max-width: 1400px) {
+  .card {
+    width: 100px;
+  }
+
+  .active {
+    width: 100vw;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .card {
+    width: 50px;
+  }
+
+  .active {
+    width: 100vw;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .card {
+    width: 30px;
+  }
+
+  .active {
+    width: 100vw;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .card {
+    width: 20px;
+  }
+
+  .active {
+    width: 100vw;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .card {
+    width: 10px;
+  }
+
+  .active {
+    width: 100vw;
+  }
+}
